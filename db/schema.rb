@@ -2,24 +2,23 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# Note that this schema.rb definition is the authoritative source for your
-# database schema. If you need to create the application database on another
-# system, you should be using db:schema:load, not running all the migrations
-# from scratch. The latter is a flawed and unsustainable approach (the more migrations
-# you'll amass, the slower it'll run and the greater likelihood for issues).
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
+# be faster and is potentially less error prone than running all of your
+# migrations from scratch. Old migrations may fail to apply correctly if those
+# migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_26_085750) do
-
+ActiveRecord::Schema[7.1].define(version: 2024_02_11_134149) do
   create_table "access_logs", force: :cascade do |t|
     t.integer "lock_id", null: false
     t.string "card_number"
     t.integer "user_id"
     t.string "direction", null: false
     t.boolean "access_provided", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.string "access_method", default: "access_card", null: false
     t.index ["lock_id"], name: "index_access_logs_on_lock_id"
     t.index ["user_id"], name: "index_access_logs_on_user_id"
@@ -29,15 +28,15 @@ ActiveRecord::Schema.define(version: 2019_08_26_085750) do
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
+    t.datetime "reset_password_sent_at", precision: nil
+    t.datetime "remember_created_at", precision: nil
     t.integer "sign_in_count", default: 0, null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
+    t.datetime "current_sign_in_at", precision: nil
+    t.datetime "last_sign_in_at", precision: nil
     t.string "current_sign_in_ip"
     t.string "last_sign_in_ip"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["email"], name: "index_admin_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
@@ -46,16 +45,24 @@ ActiveRecord::Schema.define(version: 2019_08_26_085750) do
     t.string "card_number"
     t.boolean "enabled", default: false, null: false
     t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["card_number"], name: "index_cards_on_card_number", unique: true
     t.index ["user_id"], name: "index_cards_on_user_id"
   end
 
+  create_table "emergency_statuses", force: :cascade do |t|
+    t.boolean "active"
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
+    t.string "startTime"
+    t.string "endTime"
+  end
+
   create_table "locks", force: :cascade do |t|
     t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "room_id"
     t.index ["name"], name: "index_locks_on_name", unique: true
     t.index ["room_id"], name: "index_locks_on_room_id"
@@ -64,32 +71,32 @@ ActiveRecord::Schema.define(version: 2019_08_26_085750) do
   create_table "permissions", force: :cascade do |t|
     t.integer "lock_id"
     t.integer "role_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["lock_id"], name: "index_permissions_on_lock_id"
     t.index ["role_id"], name: "index_permissions_on_role_id"
   end
 
   create_table "roles", force: :cascade do |t|
     t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["name"], name: "index_roles_on_name", unique: true
   end
 
   create_table "roles_users", force: :cascade do |t|
     t.integer "role_id"
     t.integer "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["role_id"], name: "index_roles_users_on_role_id"
     t.index ["user_id"], name: "index_roles_users_on_user_id"
   end
 
   create_table "rooms", force: :cascade do |t|
     t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["name"], name: "index_rooms_on_name", unique: true
   end
 
@@ -97,9 +104,17 @@ ActiveRecord::Schema.define(version: 2019_08_26_085750) do
     t.integer "employee_id"
     t.string "name", null: false
     t.boolean "enabled", default: false, null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["employee_id"], name: "index_users_on_employee_id", unique: true
   end
 
+  add_foreign_key "access_logs", "locks"
+  add_foreign_key "access_logs", "users"
+  add_foreign_key "cards", "users"
+  add_foreign_key "locks", "rooms"
+  add_foreign_key "permissions", "locks"
+  add_foreign_key "permissions", "roles"
+  add_foreign_key "roles_users", "roles"
+  add_foreign_key "roles_users", "users"
 end

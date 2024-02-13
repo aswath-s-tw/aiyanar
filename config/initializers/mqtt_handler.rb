@@ -1,3 +1,9 @@
+require_relative '../../app/wrappers/mqtt_client'
+require_relative '../../app/mqtt/card_handler'
+require_relative '../../app/mqtt/face_handler'
+require_relative '../../app/mqtt/emergency_status_handler'
+require_relative '../../app/mqtt/mqtt_router'
+
 CARD_READER_TOPIC = 'access_control/card_readers'
 FACE_RECOGNITION_TOPIC = 'face_recognition'
 EMERGENCY_TOPIC = 'access_control/server'
@@ -37,9 +43,9 @@ end
 Thread.new do
   while true
     Rails.logger.info '[mqtt_handler] Starting up'
-    log_and_ignore_exception do
-      MqttHandler.new.run
-    end
+    # log_and_ignore_exception do
+    MqttHandler.new.run
+    # end
     Rails.logger.info '[mqtt_handler] Restarting due to previous exception'
   end
 end
